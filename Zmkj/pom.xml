@@ -10,7 +10,7 @@
 
 	<name>RuoYi</name>
 	<url>http://www.ruoyi.vip</url>
-	<description>若依管理系统</description>
+	<description>智沐云管理系统</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
