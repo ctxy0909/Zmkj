@@ -1,9 +1,9 @@
 # 项目相关配置
-ruoyi:
+zmkj:
   # 名称
-  name: RuoYi
+  name: Zmkj
   # 版本
-  version: 3.0.0
+  version: 1.0.0
   # 版权年份
   copyrightYear: 2018
   # 文件上传路径
@@ -73,10 +73,12 @@ spring:
     # Redis数据库索引（默认为0）
     database: 0
     # Redis服务器地址
-    host: 47.104.253.21
+    #host: 47.104.253.21
+    host: 127.0.0.1
     # Redis服务器连接端口
     port: 6379
-    password: 123456
+    #password: 123456
+    password:
     jedis:
       pool:
         # 连接池中的最小空闲连接
@@ -148,7 +150,7 @@ xss:
 # 代码生成
 gen: 
   # 作者
-  author: ruoyi
+  author: zmkj
   # 默认生成包路径 module 需改成自己的模块名称 如 system monitor tool
   packageName: com.ruoyi.project.module
   # 自动去除表前缀，默认是true
