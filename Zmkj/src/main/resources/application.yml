@@ -150,7 +150,7 @@ xss:
 # 代码生成
 gen: 
   # 作者
-  author: zmkj
+  author: ruoyi
   # 默认生成包路径 module 需改成自己的模块名称 如 system monitor tool
   packageName: com.ruoyi.project.module
   # 自动去除表前缀，默认是true
