@@ -10,7 +10,7 @@
 
 	<name>Zmkj</name>
 	<url>http://www.zmkjsd.cn</url>
-	<description>智沐云管理系统1</description>
+	<description>智沐云管理系统</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
