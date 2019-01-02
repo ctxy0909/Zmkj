@@ -18,7 +18,6 @@ public class RuoYiApplication
     {
         System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(RuoYiApplication.class, args);
-        
         System.out.println("智沐云启动成功:http://localhost:9980"
               );
     }
