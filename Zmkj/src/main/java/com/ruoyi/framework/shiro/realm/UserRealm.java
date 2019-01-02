@@ -67,6 +67,10 @@ public class UserRealm extends AuthorizingRealm
         if (user.isAdmin())
         {
             info.addRole("admin");
+
+
+
+            
             info.addStringPermission("*:*:*");
         }
         else
