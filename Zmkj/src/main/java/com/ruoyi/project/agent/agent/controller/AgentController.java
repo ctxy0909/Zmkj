@@ -22,15 +22,15 @@ import java.util.List;
  * @date 2019-01-07
  */
 @Controller
-@RequestMapping("/module/agent")
+@RequestMapping("/agent/agent")
 public class AgentController extends BaseController
 {
-    private String prefix = "module/agent";
+    private String prefix = "agent/agent";
 	
 	@Autowired
 	private IAgentService agentService;
 	
-	@RequiresPermissions("module:agent:view")
+	@RequiresPermissions("agent:agent:view")
 	@GetMapping()
 	public String agent()
 	{
@@ -40,7 +40,7 @@ public class AgentController extends BaseController
 	/**
 	 * 查询代理商列表
 	 */
-	@RequiresPermissions("module:agent:list")
+	@RequiresPermissions("agent:agent:list")
 	@PostMapping("/list")
 	@ResponseBody
 	public TableDataInfo list(Agent agent)
@@ -62,7 +62,7 @@ public class AgentController extends BaseController
 	/**
 	 * 新增保存代理商
 	 */
-	@RequiresPermissions("module:agent:add")
+	@RequiresPermissions("agent:agent:add")
 	@Log(title = "代理商", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
@@ -85,7 +85,7 @@ public class AgentController extends BaseController
 	/**
 	 * 修改保存代理商
 	 */
-	@RequiresPermissions("module:agent:edit")
+	@RequiresPermissions("agent:agent:edit")
 	@Log(title = "代理商", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
@@ -97,7 +97,7 @@ public class AgentController extends BaseController
 	/**
 	 * 删除代理商
 	 */
-	@RequiresPermissions("module:agent:remove")
+	@RequiresPermissions("agent:agent:remove")
 	@Log(title = "代理商", businessType = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
