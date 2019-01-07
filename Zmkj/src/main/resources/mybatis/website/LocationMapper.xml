@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.website.location.mapper.LocationMapper">
+    
+    <resultMap type="Location" id="LocationResult">
+        <result property="id"    column="id"    />
+        <result property="location"    column="location"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectLocationVo">
+        select id, location, DATE_FORMAT(create_time,'%Y-%m-%d %h:%i:%s') as create_time,DATE_FORMAT(update_time,'%Y-%m-%d %h:%i:%s') as update_time from wx_location
+    </sql>
+	
+    <select id="selectLocationList" parameterType="Location" resultMap="LocationResult">
+        <include refid="selectLocationVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="location != null  and location != '' "> and location = #{location}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectLocationById" parameterType="Integer" resultMap="LocationResult">
+        <include refid="selectLocationVo"/>
+        where id = #{id}
+    </select>
+    
+    <select id="selectLocationAll" resultMap="LocationResult">
+        <include refid="selectLocationVo"/>
+    </select>
+        
+    <insert id="insertLocation" parameterType="Location">
+        insert into wx_location
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="location != null  and location != ''  ">location,</if>
+			 create_time,
+		     update_time,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="location != null  and location != ''  ">#{location},</if>
+			now(),now(),
+         </trim>
+         
+    </insert>
+	 
+    <update id="updateLocation" parameterType="Location">
+        update wx_location 
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="location != null  and location != ''  ">location = #{location},</if>
+            update_time=now()
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteLocationById" parameterType="Integer">
+        delete from wx_location where id = #{id}
+    </delete>
+	
+    <delete id="deleteLocationByIds" parameterType="String">
+        delete from wx_location where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

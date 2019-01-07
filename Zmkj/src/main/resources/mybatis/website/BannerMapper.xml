@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.website.banner.mapper.BannerMapper">
+    
+    <resultMap type="Banner" id="BannerResult">
+        <result property="id"    column="id"    />
+        <result property="bannerimg"    column="bannerimg"    />
+        <result property="locationid"    column="locationid"    />
+        <result property="bannerurl"    column="bannerurl"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectBannerVo">
+        select id, bannerimg, locationid, bannerurl, create_time, update_time from wx_banner
+    </sql>
+	
+    <select id="selectBannerList" parameterType="Banner" resultMap="BannerResult">
+        <include refid="selectBannerVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="bannerimg != null  and bannerimg != '' "> and bannerimg = #{bannerimg}</if>
+             <if test="locationid != null "> and locationid = #{locationid}</if>
+             <if test="bannerurl != null  and bannerurl != '' "> and bannerurl = #{bannerurl}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectBannerById" parameterType="Integer" resultMap="BannerResult">
+        <include refid="selectBannerVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBanner" parameterType="Banner">
+        insert into wx_banner
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="bannerimg != null  and bannerimg != ''  ">bannerimg,</if>
+			<if test="locationid != null  ">locationid,</if>
+			<if test="bannerurl != null  and bannerurl != ''  ">bannerurl,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateTime != null  ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="bannerimg != null  and bannerimg != ''  ">#{bannerimg},</if>
+			<if test="locationid != null  ">#{locationid},</if>
+			<if test="bannerurl != null  and bannerurl != ''  ">#{bannerurl},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateBanner" parameterType="Banner">
+        update wx_banner
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="bannerimg != null  and bannerimg != ''  ">bannerimg = #{bannerimg},</if>
+            <if test="locationid != null  ">locationid = #{locationid},</if>
+            <if test="bannerurl != null  and bannerurl != ''  ">bannerurl = #{bannerurl},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteBannerById" parameterType="Integer">
+        delete from wx_banner where id = #{id}
+    </delete>
+	
+    <delete id="deleteBannerByIds" parameterType="String">
+        delete from wx_banner where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

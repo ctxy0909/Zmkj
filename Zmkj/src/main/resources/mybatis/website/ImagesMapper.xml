@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.website.images.mapper.ImagesMapper">
+    
+    <resultMap type="Images" id="ImagesResult">
+        <result property="id"    column="id"    />
+        <result property="img"    column="img"    />
+        <result property="imgurl"    column="imgurl"    />
+        <result property="isShow"    column="is_show"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="locationid"    column="locationid"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectImagesVo">
+        select id, img, imgurl, is_show, del_flag, locationid,DATE_FORMAT(create_time,'%Y-%m-%d %h:%i:%s') as create_time,DATE_FORMAT(update_time,'%Y-%m-%d %h:%i:%s') as update_time from wx_images
+    </sql>
+	
+    <select id="selectImagesList" parameterType="Images" resultMap="ImagesResult">
+        <include refid="selectImagesVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="img != null  and img != '' "> and img = #{img}</if>
+             <if test="imgurl != null  and imgurl != '' "> and imgurl = #{imgurl}</if>
+             <if test="isShow != null  and isShow != '' "> and is_show = #{isShow}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="locationid != null "> and locationid = #{locationid}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectImagesById" parameterType="Integer" resultMap="ImagesResult">
+        <include refid="selectImagesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertImages" parameterType="Images">
+        insert into wx_images
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="img != null  and img != ''  ">img,</if>
+			<if test="imgurl != null  and imgurl != ''  ">imgurl,</if>
+			<if test="isShow != null  and isShow != ''  ">is_show,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="locationid != null  ">locationid,</if>
+			create_time,
+			update_time,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="img != null  and img != ''  ">#{img},</if>
+			<if test="imgurl != null  and imgurl != ''  ">#{imgurl},</if>
+			<if test="isShow != null  and isShow != ''  ">#{isShow},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="locationid != null  ">#{locationid},</if>
+			now(),now(),
+         </trim>
+    </insert>
+	 
+    <update id="updateImages" parameterType="Images">
+        update wx_images 
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="img != null  and img != ''  ">img = #{img},</if>
+            <if test="imgurl != null  and imgurl != ''  ">imgurl = #{imgurl},</if>
+            is_show = #{isShow},
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="locationid != null  ">locationid = #{locationid},</if>
+            update_time = now()
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteImagesById" parameterType="Integer">
+        delete from wx_images where id = #{id}
+    </delete>
+	
+    <delete id="deleteImagesByIds" parameterType="String">
+        delete from wx_images where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

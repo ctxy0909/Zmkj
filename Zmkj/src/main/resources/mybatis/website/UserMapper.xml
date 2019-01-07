@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.module.user.mapper.UserMapper">
+    
+    <resultMap type="User" id="UserResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="nickname"    column="nickname"    />
+        <result property="headimg"    column="headimg"    />
+        <result property="tel"    column="tel"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectUserVo">
+        select id, name, nickname, headimg, tel, DATE_FORMAT(create_time,'%Y-%m-%d %h:%i:%s') as create_time,DATE_FORMAT(update_time,'%Y-%m-%d %h:%i:%s') as update_time from wx_user
+    </sql>
+	
+    <select id="selectUserList" parameterType="User" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="nickname != null  and nickname != '' "> and nickname = #{nickname}</if>
+             <if test="headimg != null  and headimg != '' "> and headimg = #{headimg}</if>
+             <if test="tel != null  and tel != '' "> and tel = #{tel}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectUserById" parameterType="Integer" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUser" parameterType="User">
+        insert into wx_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="nickname != null  and nickname != ''  ">nickname,</if>
+			<if test="headimg != null  and headimg != ''  ">headimg,</if>
+			<if test="tel != null  and tel != ''  ">tel,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateTime != null  ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="nickname != null  and nickname != ''  ">#{nickname},</if>
+			<if test="headimg != null  and headimg != ''  ">#{headimg},</if>
+			<if test="tel != null  and tel != ''  ">#{tel},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateUser" parameterType="User">
+        update wx_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="nickname != null  and nickname != ''  ">nickname = #{nickname},</if>
+            <if test="headimg != null  and headimg != ''  ">headimg = #{headimg},</if>
+            <if test="tel != null  and tel != ''  ">tel = #{tel},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteUserById" parameterType="Integer">
+        delete from wx_user where id = #{id}
+    </delete>
+	
+    <delete id="deleteUserByIds" parameterType="String">
+        delete from wx_user where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

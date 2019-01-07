@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.website.message.mapper.MessageMapper">
+    
+    <resultMap type="Message" id="MessageResult">
+        <result property="id"    column="id"    />
+        <result property="userName"    column="userName"    />
+        <result property="tel"    column="tel"    />
+        <result property="userMsg"    column="userMsg"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectMessageVo">
+        select id, userMsg, tel, userName, DATE_FORMAT(create_time,'%Y-%m-%d %h:%i:%s') as create_time,DATE_FORMAT(update_time,'%Y-%m-%d %h:%i:%s') as update_time from wx_message
+    </sql>
+	
+    <select id="selectMessageList" parameterType="Message" resultMap="MessageResult">
+        <include refid="selectMessageVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="userMsg != null  and userMsg != '' "> and userMsg = #{userMsg}</if>
+             <if test="tel != null  and tel != '' "> and tel = #{tel}</if>
+             <if test="userName != null  and userName != '' "> and userName = #{userName}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectMessageById" parameterType="Integer" resultMap="MessageResult">
+        <include refid="selectMessageVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMessage" parameterType="Message">
+        insert into wx_message
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="userMsg != null  and userMsg != ''  ">userMsg,</if>
+			<if test="tel != null  and tel != ''  ">tel,</if>
+			<if test="userName != null  and userName != ''  ">userName,</if>
+			create_time,
+			update_time,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="userMsg != null  and userMsg != ''  ">#{userMsg},</if>
+			<if test="tel != null  and tel != ''  ">#{tel},</if>
+			<if test="userName != null  and userName != ''  ">#{userName},</if>
+			now(),
+			now(),
+         </trim>
+    </insert>
+	 
+    <update id="updateMessage" parameterType="Message">
+        update wx_message 
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userMsg != null  and userMsg != ''  ">userMsg = #{userMsg},</if>
+            <if test="tel != null  and tel != ''  ">tel = #{tel},</if>
+            <if test="userName != null  and userName != ''  ">userName = #{userName},</if>
+       		update_time = now()
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteMessageById" parameterType="Integer">
+        delete from wx_message where id = #{id}
+    </delete>
+	
+    <delete id="deleteMessageByIds" parameterType="String">
+        delete from wx_message where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

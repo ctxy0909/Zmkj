@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.website.text.mapper.TextMapper">
+    
+    <resultMap type="Text" id="TextResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="locationid"    column="locationid"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectTextVo">
+        select id,title, content, locationid, DATE_FORMAT(create_time,'%Y-%m-%d %h:%i:%s') as create_time,DATE_FORMAT(update_time,'%Y-%m-%d %h:%i:%s') as update_time from wx_text
+    </sql>
+	
+    <select id="selectTextList" parameterType="Text" resultMap="TextResult">
+        <include refid="selectTextVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="content != null  and content != '' "> and content = #{content}</if>
+              <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="locationid != null "> and locationid = #{locationid}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectTextById" parameterType="Integer" resultMap="TextResult">
+        <include refid="selectTextVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertText" parameterType="Text">
+        insert into wx_text
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="title != null  and title != ''  ">title,</if>
+			<if test="content != null  and content != ''  ">content,</if>
+			<if test="locationid != null  ">locationid,</if>
+			create_time,
+			update_time,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="title != null  and title != ''  ">#{title},</if>
+			<if test="content != null  and content != ''  ">#{content},</if>
+			<if test="locationid != null  ">#{locationid},</if>
+			now(),
+			now(),
+         </trim>
+    </insert>
+	 
+    <update id="updateText" parameterType="Text">
+        update wx_text 
+        <trim prefix="SET" suffixOverrides=",">
+        	<if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="content != null  and content != ''  ">content = #{content},</if>
+            <if test="locationid != null  ">locationid = #{locationid},</if>
+            update_time = now()
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteTextById" parameterType="Integer">
+        delete from wx_text where id = #{id}
+    </delete>
+	
+    <delete id="deleteTextByIds" parameterType="String">
+        delete from wx_text where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
