@@ -28,9 +28,15 @@
 				<label>公司地址：</label>
 				<input type="text" placeholder="联系方式" name="address" class="address"/>
 			</div>
-			<input type="submit" value="确定" class="sub"/>
+			<input type="submit" value="确定" class="sub" onclick="submitHandler()"/>
 			<input type="reset" value="取消" class="res"/>
 		</form>
 	</div>
+	<script type="text/javascript">
+		var prefix = ctx + "system/register"
+		function submitHandler(){
+			$.operate.save(prefix + "/add", $('#form-agent-add').serialize());
+		}
+	</script>
 </body>
 </html>

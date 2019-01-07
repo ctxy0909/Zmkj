@@ -1,8 +1,6 @@
 package com.ruoyi.project.website.location.service;
 
 import com.ruoyi.project.website.location.domain.Location;
-import com.sun.prism.Image;
-
 import java.util.List;
 
 /**

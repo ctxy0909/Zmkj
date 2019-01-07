@@ -10,7 +10,6 @@ import com.ruoyi.project.website.location.domain.Location;
 import com.ruoyi.project.website.location.service.ILocationService;
 import com.ruoyi.project.website.text.domain.Text;
 import com.ruoyi.project.website.text.mapper.TextMapper;
-import com.sun.prism.Image;
 import com.ruoyi.common.support.Convert;
 
 /**
