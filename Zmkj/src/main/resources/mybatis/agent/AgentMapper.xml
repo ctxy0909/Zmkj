@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.agent.agent.controller.mapper.AgentMapper">
+    
+    <resultMap type="Agent" id="AgentResult">
+        <result property="id"    column="id"    />
+        <result property="devellopNextlevel"    column="devellop_nextlevel"    />
+        <result property="parentAgentId"    column="parent_agent_id"    />
+        <result property="agentName"    column="agent_name"    />
+        <result property="phone"    column="phone"    />
+        <result property="adress"    column="adress"    />
+        <result property="email"    column="email"    />
+        <result property="loginName"    column="login_name"    />
+        <result property="password"    column="password"    />
+        <result property="salt"    column="salt"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+	
+	<sql id="selectAgentVo">
+        select id, devellop_nextlevel, parent_agent_id, agent_name, phone, adress, email, login_name, password, salt, create_by, create_time, update_by, update_time, remark from zmkj_agent
+    </sql>
+	
+    <select id="selectAgentList" parameterType="Agent" resultMap="AgentResult">
+        <include refid="selectAgentVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="devellopNextlevel != null  and devellopNextlevel != '' "> and devellop_nextlevel = #{devellopNextlevel}</if>
+             <if test="parentAgentId != null "> and parent_agent_id = #{parentAgentId}</if>
+             <if test="agentName != null "> and agent_name = #{agentName}</if>
+             <if test="phone != null "> and phone = #{phone}</if>
+             <if test="adress != null "> and adress = #{adress}</if>
+             <if test="email != null "> and email = #{email}</if>
+             <if test="loginName != null  and loginName != '' "> and login_name = #{loginName}</if>
+             <if test="password != null  and password != '' "> and password = #{password}</if>
+             <if test="salt != null  and salt != '' "> and salt = #{salt}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+         </where>
+    </select>
+    
+    <select id="selectAgentById" parameterType="Integer" resultMap="AgentResult">
+        <include refid="selectAgentVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAgent" parameterType="Agent">
+        insert into zmkj_agent
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="devellopNextlevel != null  and devellopNextlevel != ''  ">devellop_nextlevel,</if>
+			<if test="parentAgentId != null  ">parent_agent_id,</if>
+			<if test="agentName != null  ">agent_name,</if>
+			<if test="phone != null  ">phone,</if>
+			<if test="adress != null  ">adress,</if>
+			<if test="email != null  ">email,</if>
+			<if test="loginName != null  and loginName != ''  ">login_name,</if>
+			<if test="password != null  and password != ''  ">password,</if>
+			<if test="salt != null  and salt != ''  ">salt,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="devellopNextlevel != null  and devellopNextlevel != ''  ">#{devellopNextlevel},</if>
+			<if test="parentAgentId != null  ">#{parentAgentId},</if>
+			<if test="agentName != null  ">#{agentName},</if>
+			<if test="phone != null  ">#{phone},</if>
+			<if test="adress != null  ">#{adress},</if>
+			<if test="email != null  ">#{email},</if>
+			<if test="loginName != null  and loginName != ''  ">#{loginName},</if>
+			<if test="password != null  and password != ''  ">#{password},</if>
+			<if test="salt != null  and salt != ''  ">#{salt},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateAgent" parameterType="Agent">
+        update zmkj_agent
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="devellopNextlevel != null  and devellopNextlevel != ''  ">devellop_nextlevel = #{devellopNextlevel},</if>
+            <if test="parentAgentId != null  ">parent_agent_id = #{parentAgentId},</if>
+            <if test="agentName != null  ">agent_name = #{agentName},</if>
+            <if test="phone != null  ">phone = #{phone},</if>
+            <if test="adress != null  ">adress = #{adress},</if>
+            <if test="email != null  ">email = #{email},</if>
+            <if test="loginName != null  and loginName != ''  ">login_name = #{loginName},</if>
+            <if test="password != null  and password != ''  ">password = #{password},</if>
+            <if test="salt != null  and salt != ''  ">salt = #{salt},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteAgentById" parameterType="Integer">
+        delete from zmkj_agent where id = #{id}
+    </delete>
+	
+    <delete id="deleteAgentByIds" parameterType="String">
+        delete from zmkj_agent where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

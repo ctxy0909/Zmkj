@@ -21,4 +21,5 @@ public class RegController extends BaseController {
     {
         return "reg";
     }
+
 }
