@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/agent/agent")
 public class AgentController extends BaseController
 {
-    private String prefix = "agent/agent";
+    private String prefix = "agent";
 	
 	@Autowired
 	private IAgentService agentService;

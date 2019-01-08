@@ -15,7 +15,7 @@ public class BaseException extends RuntimeException
     /**
      * 所属模块
      */
-    private String module;
+    private String agent;
 
     /**
      * 错误码
@@ -32,22 +32,22 @@ public class BaseException extends RuntimeException
      */
     private String defaultMessage;
 
-    public BaseException(String module, String code, Object[] args, String defaultMessage)
+    public BaseException(String agent, String code, Object[] args, String defaultMessage)
     {
-        this.module = module;
+        this.agent = agent;
         this.code = code;
         this.args = args;
         this.defaultMessage = defaultMessage;
     }
 
-    public BaseException(String module, String code, Object[] args)
+    public BaseException(String agent, String code, Object[] args)
     {
-        this(module, code, args, null);
+        this(agent, code, args, null);
     }
 
-    public BaseException(String module, String defaultMessage)
+    public BaseException(String agent, String defaultMessage)
     {
-        this(module, null, null, defaultMessage);
+        this(agent, null, null, defaultMessage);
     }
 
     public BaseException(String code, Object[] args)
@@ -75,9 +75,9 @@ public class BaseException extends RuntimeException
         return message;
     }
 
-    public String getModule()
+    public String getagent()
     {
-        return module;
+        return agent;
     }
 
     public String getCode()
@@ -98,6 +98,6 @@ public class BaseException extends RuntimeException
     @Override
     public String toString()
     {
-        return this.getClass() + "{" + "module='" + module + '\'' + ", message='" + getMessage() + '\'' + '}';
+        return this.getClass() + "{" + "agent='" + agent + '\'' + ", message='" + getMessage() + '\'' + '}';
     }
 }

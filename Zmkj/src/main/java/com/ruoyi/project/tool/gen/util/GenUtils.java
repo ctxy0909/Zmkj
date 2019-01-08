@@ -65,7 +65,7 @@ public class GenUtils
         velocityContext.put("primaryKey", table.getPrimaryKey());
         velocityContext.put("className", table.getClassName());
         velocityContext.put("classname", table.getClassname());
-        velocityContext.put("moduleName", GenUtils.getModuleName(packageName));
+        velocityContext.put("agentName", GenUtils.getagentName(packageName));
         velocityContext.put("columns", table.getColumns());
         velocityContext.put("package", packageName + "." + table.getClassname());
         velocityContext.put("author", GenConfig.getAuthor());
@@ -113,15 +113,15 @@ public class GenUtils
     /**
      * 获取文件名
      */
-    public static String getFileName(String template, TableInfo table, String moduleName)
+    public static String getFileName(String template, TableInfo table, String agentName)
     {
         // 小写类名
         String classname = table.getClassname();
         // 大写类名
         String className = table.getClassName();
-        String javaPath = PROJECT_PATH + "/" + moduleName + "/";
-        String mybatisPath = MYBATIS_PATH + "/" + moduleName + "/" + className;
-        String htmlPath = TEMPLATES_PATH + "/" + moduleName + "/" + classname;
+        String javaPath = PROJECT_PATH + "/" + agentName + "/";
+        String mybatisPath = MYBATIS_PATH + "/" + agentName + "/" + className;
+        String htmlPath = TEMPLATES_PATH + "/" + agentName + "/" + classname;
 
         if (StringUtils.isNotEmpty(classname))
         {
@@ -183,12 +183,12 @@ public class GenUtils
      * @param packageName 包名
      * @return 模块名
      */
-    public static String getModuleName(String packageName)
+    public static String getagentName(String packageName)
     {
         int lastIndex = packageName.lastIndexOf(".");
         int nameLength = packageName.length();
-        String moduleName = StringUtils.substring(packageName, lastIndex + 1, nameLength);
-        return moduleName;
+        String agentName = StringUtils.substring(packageName, lastIndex + 1, nameLength);
+        return agentName;
     }
 
     public static String replaceKeyword(String keyword)
@@ -201,6 +201,6 @@ public class GenUtils
     {
         System.out.println(StringUtils.convertToCamelCase("user_name"));
         System.out.println(replaceKeyword("岗位信息表"));
-        System.out.println(getModuleName("com.ruoyi.project.system"));
+        System.out.println(getagentName("com.ruoyi.project.system"));
     }
 }
