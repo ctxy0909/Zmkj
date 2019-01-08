@@ -2,15 +2,16 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.project.agent.agent.controller.mapper.AgentMapper">
+<mapper namespace="com.ruoyi.project.agent.agent.mapper.AgentMapper">
     
     <resultMap type="Agent" id="AgentResult">
         <result property="id"    column="id"    />
         <result property="devellopNextlevel"    column="devellop_nextlevel"    />
         <result property="parentAgentId"    column="parent_agent_id"    />
         <result property="agentName"    column="agent_name"    />
-        <result property="phone"    column="phone"    />
-        <result property="adress"    column="adress"    />
+        <result property="agentTel"    column="agent_tel"    />
+        <result property="address"    column="address"    />
+        <result property="company"    column="company"    />
         <result property="email"    column="email"    />
         <result property="loginName"    column="login_name"    />
         <result property="password"    column="password"    />
@@ -23,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectAgentVo">
-        select id, devellop_nextlevel, parent_agent_id, agent_name, phone, adress, email, login_name, password, salt, create_by, create_time, update_by, update_time, remark from zmkj_agent
+        select id, devellop_nextlevel,company, parent_agent_id, agent_name, agent_tel, address, email, login_name, password, salt, create_by, create_time, update_by, update_time, remark from zmkj_agent
     </sql>
 	
     <select id="selectAgentList" parameterType="Agent" resultMap="AgentResult">
@@ -33,8 +34,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="devellopNextlevel != null  and devellopNextlevel != '' "> and devellop_nextlevel = #{devellopNextlevel}</if>
              <if test="parentAgentId != null "> and parent_agent_id = #{parentAgentId}</if>
              <if test="agentName != null "> and agent_name = #{agentName}</if>
-             <if test="phone != null "> and phone = #{phone}</if>
-             <if test="adress != null "> and adress = #{adress}</if>
+             <if test="agent_tel != null "> and agent_tel = #{agentTel}</if>
+             <if test="address != null "> and address = #{address}</if>
              <if test="email != null "> and email = #{email}</if>
              <if test="loginName != null  and loginName != '' "> and login_name = #{loginName}</if>
              <if test="password != null  and password != '' "> and password = #{password}</if>
@@ -55,37 +56,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertAgent" parameterType="Agent">
         insert into zmkj_agent
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null  ">id,</if>
 			<if test="devellopNextlevel != null  and devellopNextlevel != ''  ">devellop_nextlevel,</if>
 			<if test="parentAgentId != null  ">parent_agent_id,</if>
 			<if test="agentName != null  ">agent_name,</if>
-			<if test="phone != null  ">phone,</if>
-			<if test="adress != null  ">adress,</if>
+			<if test="agentTel != null  ">agent_tel,</if>
+			<if test="company != null  ">company,</if>
+			<if test="address != null  ">address,</if>
 			<if test="email != null  ">email,</if>
 			<if test="loginName != null  and loginName != ''  ">login_name,</if>
 			<if test="password != null  and password != ''  ">password,</if>
 			<if test="salt != null  and salt != ''  ">salt,</if>
 			<if test="createBy != null  and createBy != ''  ">create_by,</if>
-			<if test="createTime != null  ">create_time,</if>
+			create_time,
 			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
-			<if test="updateTime != null  ">update_time,</if>
+			update_time,
 			<if test="remark != null  and remark != ''  ">remark,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null  ">#{id},</if>
 			<if test="devellopNextlevel != null  and devellopNextlevel != ''  ">#{devellopNextlevel},</if>
 			<if test="parentAgentId != null  ">#{parentAgentId},</if>
 			<if test="agentName != null  ">#{agentName},</if>
-			<if test="phone != null  ">#{phone},</if>
-			<if test="adress != null  ">#{adress},</if>
+			<if test="agentTel != null  ">#{agentTel},</if>
+			<if test="company != null  ">#{company},</if>
+			<if test="address != null  ">#{address},</if>
 			<if test="email != null  ">#{email},</if>
 			<if test="loginName != null  and loginName != ''  ">#{loginName},</if>
 			<if test="password != null  and password != ''  ">#{password},</if>
 			<if test="salt != null  and salt != ''  ">#{salt},</if>
 			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
-			<if test="createTime != null  ">#{createTime},</if>
+			now(),
 			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
-			<if test="updateTime != null  ">#{updateTime},</if>
+			now(),
 			<if test="remark != null  and remark != ''  ">#{remark},</if>
          </trim>
     </insert>
@@ -96,9 +97,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="devellopNextlevel != null  and devellopNextlevel != ''  ">devellop_nextlevel = #{devellopNextlevel},</if>
             <if test="parentAgentId != null  ">parent_agent_id = #{parentAgentId},</if>
             <if test="agentName != null  ">agent_name = #{agentName},</if>
-            <if test="phone != null  ">phone = #{phone},</if>
-            <if test="adress != null  ">adress = #{adress},</if>
+            <if test="agentTel != null  ">agent_tel = #{agentTel},</if>
+            <if test="address != null  ">address = #{address},</if>
             <if test="email != null  ">email = #{email},</if>
+            <if test="company != null  ">company = #{company},</if>
             <if test="loginName != null  and loginName != ''  ">login_name = #{loginName},</if>
             <if test="password != null  and password != ''  ">password = #{password},</if>
             <if test="salt != null  and salt != ''  ">salt = #{salt},</if>

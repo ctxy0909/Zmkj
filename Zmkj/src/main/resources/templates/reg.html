@@ -1,42 +1,82 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>代理商注册</title>
-</head>
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
-<body>
-	<div>
-		<form id="form-agent-add">
-			<div>
-				<label>姓名：</label>
-				<input type="text" placeholder="姓名" name="agentName" class="agentName"/>
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-agent-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">代理商名称：</label>
+				<div class="col-sm-4">
+					<input id="agentName" name="agentName" class="form-control" type="text">
+				</div>
 			</div>
-			<div>
-				<label>联系方式：</label>
-				<input type="text" placeholder="联系方式" name="agentTel" class="agentTel"/>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">联系电话：</label>
+				<div class="col-sm-4">
+					<input id="agentTel" name="agentTel" class="form-control" type="text">
+				</div>
 			</div>
-			<div>
-				<label>邮箱地址：</label>
-				<input type="text" placeholder="联系方式" name="agentEmail" class="agentEmail"/>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">公司名称：</label>
+				<div class="col-sm-4">
+					<input id="company" name="company" class="form-control" type="text">
+				</div>
 			</div>
-			<div>
-				<label>公司名称：</label>
-				<input type="text" placeholder="联系方式" name="company" class="company"/>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">公司地址：</label>
+				<div class="col-sm-4">
+					<input id="address" name="address" class="form-control" type="text">
+				</div>
 			</div>
-			<div>
-				<label>公司地址：</label>
-				<input type="text" placeholder="联系方式" name="address" class="address"/>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">邮箱：</label>
+				<div class="col-sm-4">
+					<input id="email" name="email" class="form-control" type="text">
+				</div>
 			</div>
-			<input type="submit" value="确定" class="sub" onclick="submitHandler()"/>
-			<input type="reset" value="取消" class="res"/>
 		</form>
+		<input type="button" onclick="submitHandler()" value="注册">
+		<input type="reset" value="取消">
 	</div>
-	<script type="text/javascript">
-		var prefix = ctx + "system/register"
-		function submitHandler(){
-			$.operate.save(prefix + "/add", $('#form-agent-add').serialize());
-		}
+	<div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "/reg"
+		$("#form-agent-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	      /*   if ($.validate.form()) {
+	            $.operate.save(prefix + "/register", $('#form-agent-add').serialize());
+	        } */
+	        var agentName = $("#agentName").val();
+	        var agentTel = $("#agentTel").val();
+	        var address = $("#address").val();
+	        var email = $("#email").val();
+	        var company = $("#company").val();
+	        $.ajax({
+	            type: "post",
+	            dataType :"json",
+	           	url:"http://127.0.0.1:9980/agent/agent/register",
+	            data: { agentName:agentName,
+	            		agentTel:agentTel,
+	            		address:address,
+	            		email:email,
+	            		company:company
+	            		},
+	            success: function(r) {
+	            	if(r.code == 0){
+	            		$.modal.msgSuccess("注册成功！");
+	            		location.href = ctx + 'toLogin';
+	            	}
+	            }
+	        });
+	    }
 	</script>
 </body>
 </html>

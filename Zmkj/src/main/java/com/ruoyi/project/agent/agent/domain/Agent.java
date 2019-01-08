@@ -24,9 +24,11 @@ public class Agent extends BaseEntity
 	/** 代理商名称 */
 	private String agentName;
 	/** 联系电话 */
-	private String phone;
+	private String agentTel;
+	/** 联系电话 */
+	private String company;
 	/** 联系地址 */
-	private String adress;
+	private String address;
 	/** 邮箱 */
 	private String email;
 	/** 登录账号 */
@@ -46,137 +48,171 @@ public class Agent extends BaseEntity
 	/**  */
 	private String remark;
 
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
+	public void setId(Integer id) 
+	{
 		this.id = id;
 	}
 
-	public String getDevellopNextlevel() {
-		return devellopNextlevel;
+	public Integer getId() 
+	{
+		return id;
 	}
-
-	public void setDevellopNextlevel(String devellopNextlevel) {
+	public void setDevellopNextlevel(String devellopNextlevel) 
+	{
 		this.devellopNextlevel = devellopNextlevel;
 	}
 
-	public Integer getParentAgentId() {
-		return parentAgentId;
+	public String getDevellopNextlevel() 
+	{
+		return devellopNextlevel;
 	}
-
-	public void setParentAgentId(Integer parentAgentId) {
+	public void setParentAgentId(Integer parentAgentId) 
+	{
 		this.parentAgentId = parentAgentId;
 	}
 
-	public String getAgentName() {
-		return agentName;
+	public Integer getParentAgentId() 
+	{
+		return parentAgentId;
 	}
-
-	public void setAgentName(String agentName) {
+	public void setAgentName(String agentName) 
+	{
 		this.agentName = agentName;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getAgentName() 
+	{
+		return agentName;
+	}
+	
+	public String getAgentTel() {
+		return agentTel;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setAgentTel(String agentTel) {
+		this.agentTel = agentTel;
 	}
 
-	public String getAdress() {
-		return adress;
+	public String getCompany() {
+		return company;
 	}
 
-	public void setAdress(String adress) {
-		this.adress = adress;
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
-	public String getEmail() {
-		return email;
+	public void setAddress(String address) 
+	{
+		this.address = address;
 	}
 
-	public void setEmail(String email) {
+	public String getAddress() 
+	{
+		return address;
+	}
+	public void setEmail(String email) 
+	{
 		this.email = email;
 	}
 
-	public String getLoginName() {
-		return loginName;
+	public String getEmail() 
+	{
+		return email;
 	}
-
-	public void setLoginName(String loginName) {
+	public void setLoginName(String loginName) 
+	{
 		this.loginName = loginName;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getLoginName() 
+	{
+		return loginName;
 	}
-
-	public void setPassword(String password) {
+	public void setPassword(String password) 
+	{
 		this.password = password;
 	}
 
-	public String getSalt() {
-		return salt;
+	public String getPassword() 
+	{
+		return password;
 	}
-
-	public void setSalt(String salt) {
+	public void setSalt(String salt) 
+	{
 		this.salt = salt;
 	}
 
-	@Override
-	public String getCreateBy() {
-		return createBy;
+	public String getSalt() 
+	{
+		return salt;
 	}
-
-	@Override
-	public void setCreateBy(String createBy) {
+	public void setCreateBy(String createBy) 
+	{
 		this.createBy = createBy;
 	}
 
-	@Override
-	public Date getCreateTime() {
-		return createTime;
+	public String getCreateBy() 
+	{
+		return createBy;
 	}
-
-	@Override
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Date createTime) 
+	{
 		this.createTime = createTime;
 	}
 
-	@Override
-	public String getUpdateBy() {
-		return updateBy;
+	public Date getCreateTime() 
+	{
+		return createTime;
 	}
-
-	@Override
-	public void setUpdateBy(String updateBy) {
+	public void setUpdateBy(String updateBy) 
+	{
 		this.updateBy = updateBy;
 	}
 
-	@Override
-	public Date getUpdateTime() {
-		return updateTime;
+	public String getUpdateBy() 
+	{
+		return updateBy;
 	}
-
-	@Override
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Date updateTime) 
+	{
 		this.updateTime = updateTime;
 	}
 
-	@Override
-	public String getRemark() {
+	public Date getUpdateTime() 
+	{
+		return updateTime;
+	}
+	public void setRemark(String remark) 
+	{
+		this.remark = remark;
+	}
+
+	public String getRemark() 
+	{
 		return remark;
 	}
 
-	@Override
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
+
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("id", getId())
+            .append("devellopNextlevel", getDevellopNextlevel())
+            .append("parentAgentId", getParentAgentId())
+            .append("agentName", getAgentName())
+            .append("agentTel", getAgentTel())
+            .append("adress", getAddress())
+            .append("company", getCompany())
+            .append("email", getEmail())
+            .append("loginName", getLoginName())
+            .append("password", getPassword())
+            .append("salt", getSalt())
+            .append("createBy", getCreateBy())
+            .append("createTime", getCreateTime())
+            .append("updateBy", getUpdateBy())
+            .append("updateTime", getUpdateTime())
+            .append("remark", getRemark())
+            .toString();
+    }
+	
+	
 }
