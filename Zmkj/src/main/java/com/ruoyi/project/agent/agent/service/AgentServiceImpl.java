@@ -1,13 +1,8 @@
 package com.ruoyi.project.agent.agent.service;
 
 import com.ruoyi.common.support.Convert;
-import com.ruoyi.common.utils.Md5Utils;
-import com.ruoyi.framework.shiro.service.PasswordService;
 import com.ruoyi.project.agent.agent.domain.Agent;
 import com.ruoyi.project.agent.agent.mapper.AgentMapper;
-import com.ruoyi.project.system.user.domain.User;
-import com.ruoyi.project.system.user.mapper.UserMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +19,7 @@ public class AgentServiceImpl implements IAgentService
 {
 	@Autowired
 	private AgentMapper agentMapper;
-	@Autowired
-	private UserMapper userMapper;
-	@Autowired
-    private PasswordService passwordService;
-	
+
 	/**
      * 查询代理商信息
      * 
@@ -62,18 +53,7 @@ public class AgentServiceImpl implements IAgentService
 	@Override
 	public int insertAgent(Agent agent)
 	{
-		int insertAgent = agentMapper.insertAgent(agent);
-//		if(insertAgent>0) {
-//			User user = new User();
-//			user.setLoginName(agent.getAgentName());
-//			user.setPassword(passwordService.encryptPassword(agent.getAgentName(), agent.getAgentTel(), agent.getSalt()));
-//			user.setUserName(agent.getAgentName());
-//			user.setEmail(agent.getEmail());
-//			user.setDeptId(-1L);
-//			userMapper.insertUser(user);
-//		}
-		
-	    return insertAgent;
+	    return agentMapper.insertAgent(agent);
 	}
 	
 	/**

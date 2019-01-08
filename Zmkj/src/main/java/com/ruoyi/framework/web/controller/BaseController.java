@@ -2,15 +2,7 @@ package com.ruoyi.framework.web.controller;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditorSupport;
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
-
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import com.github.pagehelper.PageHelper;
@@ -23,7 +15,6 @@ import com.ruoyi.framework.web.page.PageDomain;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.framework.web.page.TableSupport;
 import com.ruoyi.project.system.user.domain.User;
-import java.lang.reflect.Method;
 
 /**
  * web层通用数据处理
@@ -155,56 +146,4 @@ public class BaseController
     {
         return getSysUser().getLoginName();
     }
-    
-	protected Object foreachParmDataObj(Map<String, ?> parm, Class<?> entityClass) {
-		BeanInfo beanInfo;
-		Object obj = null;
-		try {
-			obj = entityClass.newInstance();
-			beanInfo = Introspector.getBeanInfo(obj.getClass());
-			PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
-			for (PropertyDescriptor property : propertyDescriptors) {
-				Method setter = property.getWriteMethod();
-				if (setter != null) {
-					Object value = parm.get(property.getName());
-					if (value != null) {
-						Object[] array = (Object[]) value;
-						Object ob = array[0];
-						String dataType = property.getReadMethod().getGenericReturnType().toString();
-						if ("class java.lang.Long".equals(dataType) && !ob.equals("")) {
-							setter.invoke(obj, new Long(ob.toString()));
-							continue;
-						}
-						if ("class java.lang.Integer".equals(dataType) && !ob.equals("")) {
-							setter.invoke(obj, new Integer(ob.toString()));
-							continue;
-						}
-						if ("class java.lang.Float".equals(dataType) && !ob.equals("")) {
-							setter.invoke(obj, new Float(ob.toString()));
-							continue;
-						}
-						if ("class java.math.BigDecimal".equals(dataType) && !ob.equals("")) {
-							setter.invoke(obj, new BigDecimal(ob.toString()));
-							continue;
-						}
-						if (!ob.equals("") && !"null".equals(ob)) {
-							setter.invoke(obj, ob);
-						}
-					}
-				}
-			}
-		} catch (IntrospectionException e) {
-			System.out.println("map转换对象get或者set方法没有找到");
-		} catch (IllegalAccessException e) {
-			System.out.println("map转换对象访问私有变量没有权限");
-		} catch (IllegalArgumentException e) {
-			System.out.println("map转换对象访数据异常");
-		} catch (InvocationTargetException e) {
-			System.out.println("map转换对象反射get或者set方法异常");
-		} catch (InstantiationException e) {
-			System.out.println("对象实例化失败");
-		}
-		return obj;
-	}
-    
 }

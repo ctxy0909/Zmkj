@@ -14,9 +14,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 代理商 信息操作处理
@@ -65,16 +62,13 @@ public class AgentController extends BaseController
 	/**
 	 * 新增保存代理商
 	 */
-	@PostMapping("/register")
+	@RequiresPermissions("agent:agent:add")
+	@Log(title = "代理商", businessType = BusinessType.INSERT)
+	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(HttpServletRequest request)
+	public AjaxResult addSave(Agent agent)
 	{		
-		Object dataObj = foreachParmDataObj(request.getParameterMap(),Agent.class);
-		Agent bean = null;
-		if(dataObj instanceof Agent) {
-			bean = (Agent) dataObj;
-		}
-		return toAjax(agentService.insertAgent(bean));
+		return toAjax(agentService.insertAgent(agent));
 	}
 
 	/**
